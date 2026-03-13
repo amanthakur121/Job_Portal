@@ -25,7 +25,7 @@ logo: `https://www.google.com/s2/favicons?sz=64&domain=${company.toLowerCase()}.
 
 try{
 
-await axios.post("http://localhost:5000/api/jobs", newJob);
+await axios.post("https://job-portal-9irl.onrender.com/api/jobs", newJob);
 
 navigate("/jobs");
 
