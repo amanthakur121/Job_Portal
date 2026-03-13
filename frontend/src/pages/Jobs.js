@@ -10,7 +10,7 @@ const [locationSearch,setLocationSearch] = useState("");
 
 useEffect(()=>{
 
-axios.get("http://localhost:5000/api/jobs")
+axios.get("https://job-portal-9irl.onrender.com/api/jobs")
 .then(res=>{
 setJobs(res.data)
 })
