@@ -7,15 +7,18 @@ const [jobs,setJobs] = useState([]);
 const [titleSearch,setTitleSearch] = useState("");
 const [companySearch,setCompanySearch] = useState("");
 const [locationSearch,setLocationSearch] = useState("");
+const [loading,setLoading] = useState(true);
 
 useEffect(()=>{
 
 axios.get("https://job-portal-9irl.onrender.com/api/jobs")
 .then(res=>{
 setJobs(res.data)
+setLoading(false)
 })
 .catch(err=>{
 console.log(err)
+setLoading(false)
 })
 
 },[])
@@ -26,6 +29,16 @@ job.company.toLowerCase().includes(companySearch.toLowerCase()) &&
 job.location.toLowerCase().includes(locationSearch.toLowerCase())
 );
 
+if(loading){
+return(
+<div className="flex justify-center items-center h-screen">
+<div className="flex flex-col items-center">
+<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+<p className="mt-4 text-gray-600">Loading jobs...</p>
+</div>
+</div>
+)
+}
 return(
 
 <div className="bg-gray-100 min-h-screen p-10">
@@ -62,7 +75,12 @@ onChange={(e)=>setLocationSearch(e.target.value)}
 
 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-{filteredJobs.map((job,index)=>(
+{filteredJobs.length === 0 ? (
+<p className="text-center text-gray-500 col-span-3">
+No jobs found
+</p>
+) : (
+filteredJobs.map((job,index)=>(
 <div key={index} className="bg-white p-6 rounded-xl shadow hover:shadow-lg">
 
 <div className="flex items-center mb-4">
@@ -98,7 +116,8 @@ Apply Now
 </button>
 
 </div>
-))}
+))
+)}
 
 </div>
 
